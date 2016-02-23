@@ -7,6 +7,7 @@ from itertools import starmap
 from base import Sudoku
 from helper import Constraints, Coords, PriorityInfo
 
+
 class SolveSudoku(Sudoku):
 
     def __init__(self, sqrt_n, board):
@@ -61,7 +62,6 @@ class SolveSudoku(Sudoku):
             & constraints.square[coords.square])
 
             if not choices:
-                # print('backtracking')
                 return False
 
             for num in choices:
@@ -72,13 +72,6 @@ class SolveSudoku(Sudoku):
                 cc.row[coords.row].remove(num)
                 cc.col[coords.col].remove(num)
                 cc.square[coords.square].remove(num)
-
-                #
-                # print("heap", heap)
-                # self.print_board()
-                # print("constraints", cc)
-                # print("\ncurrent", coords, "\nnext", next_coords, "\n")
-                # import pdb; pdb.set_trace()
 
                 result = self.recurse(deepcopy(heap), cc)  # recurse with new constraints
                 if result:
@@ -113,10 +106,6 @@ class SolveSudoku(Sudoku):
 
         coords = [Coords(row=r, col=c, square=self.get_square_index(r, c))
         for c in range(self.n) for r in range(self.n) if self.board[r][c] == 0 ]
-
-        # coords = starmap(lambda r, c: Coords(row=r, col=c, square=self.get_square_index(r, c)),
-        # filter(lambda item: self.board[item[0]][item[1]] == 0,
-        # ( (r, c) for c in range(self.n) for r in range(self.n) ) ) )
         return coords
 
     def sort_blanks_by_priority(self, coords):

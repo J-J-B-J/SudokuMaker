@@ -47,7 +47,6 @@ class MakeSudoku(Sudoku):
         constraints.square[coords.square])
 
         if not choices: # backtrack
-            # print('backtracking.')
             return False
 
         while choices:
@@ -59,22 +58,12 @@ class MakeSudoku(Sudoku):
             cc.row[coords.row].remove(num_assigned)
             cc.col[coords.col].remove(num_assigned)
             cc.square[coords.square].remove(num_assigned)
-            
+
             next_coords = self.next_cell_coords(coords)
-
-            # self.print_board()
-            # print("num_assigned", num_assigned)
-            # print("constraints", constraints.row[coords.row], constraints.col[coords.col], constraints.square[coords.square],  sep="\n")
-            # print("choices", choices)
-            # print("\ncurrent", coords, "\nnext", next_coords, "\n")
-            # import pdb; pdb.set_trace()
-
             result = self.recurse(next_coords, cc)
 
             if result:
                 return True
-            # else:
-            #     print('invalid solution with current assignment. continue')
 
         return False
 
