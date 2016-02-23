@@ -1,23 +1,23 @@
 
 #### sudoku maker and solver in python
 
-use forward checking to enforce consistency of arcs pointing to new assignment and backtrack when domain is empty.
+uses forward checking to enforce consistency of arcs pointing to new assignment and backtracks when domain is empty.
 
 ####files
 
-helper.py: classes for nice shorthand
-base.py: base sudoku class with helper functions
-make.py: make a sudoku board
-solve.py: solve a sudoku board
-run.py: parse user input and make/solve board of chosen size
+    helper.py: classes for nice shorthand
+    base.py: base sudoku class with helper functions
+    make.py: make a sudoku board
+    solve.py: solve a sudoku board
+    run.py: parse user input and make/solve board of chosen size
 
 ####terms
 
-square: sqrt_n by sqrt_n section of nxn board
+    square: sqrt_n by sqrt_n section of nxn board
 
-squares are zero indexed from upper left to bottom right
+    squares are zero indexed from upper left to bottom right
 
-0 represents a blank cell
+    0 represents a blank cell
 
 ####run
 
