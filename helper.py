@@ -1,10 +1,10 @@
-# helper.py
+"""Classes for nice shorthand"""
 
 from collections import namedtuple
 from copy import deepcopy
 
-
 Coords = namedtuple("Coords", "row col square")
+
 
 class Constraints:
     """
@@ -25,7 +25,9 @@ class Constraints:
 
     @classmethod
     def copy(cls, other):
-        return cls(deepcopy(other.row), deepcopy(other.col), deepcopy(other.square))
+        """Create a copy of self"""
+        return cls(deepcopy(other.row), deepcopy(other.col),
+                   deepcopy(other.square))
 
 
 class PriorityInfo:
@@ -35,7 +37,7 @@ class PriorityInfo:
 
     def __init__(self, coords, row_count, col_count, square_count):
         self.coords = coords
-        self.row_count = row_count # number of zeros
+        self.row_count = row_count  # number of zeros
         self.col_count = col_count
         self.square_count = square_count
         self.priority = min(row_count, col_count, square_count)

@@ -1,4 +1,4 @@
-# make.py
+"""Make a sudoku board"""
 
 from base import Sudoku
 from helper import Constraints, Coords
@@ -8,6 +8,7 @@ from copy import deepcopy
 
 
 class MakeSudoku(Sudoku):
+    """Make a sudoku board"""
 
     def __init__(self, sqrt_n):
         Sudoku.__init__(self, sqrt_n)
@@ -20,8 +21,8 @@ class MakeSudoku(Sudoku):
         Recurse for solution.
         """
 
-        self.board = [[0] * self.n for x in range(self.n)]
-        row = [set(range(1, self.n+1)) for x in range(self.n)]
+        self.board = [[0] * self.n for _ in range(self.n)]
+        row = [set(range(1, self.n + 1)) for _ in range(self.n)]
         col, square = deepcopy(row), deepcopy(row)
 
         constraints = Constraints(row, col, square)
@@ -34,7 +35,8 @@ class MakeSudoku(Sudoku):
 
         for choice in constraints: copy constraints, remove choice, recurse
 
-        self.board does not reflect current recursion state of board (constraints do)
+        self.board does not reflect current recursion state of board (
+        constraints do)
         but will have final solution when constraints are empty
         """
 
@@ -42,11 +44,12 @@ class MakeSudoku(Sudoku):
             return True
 
         choices = list(
-        constraints.row[coords.row] &
-        constraints.col[coords.col] &
-        constraints.square[coords.square])
+            constraints.row[coords.row] &
+            constraints.col[coords.col] &
+            constraints.square[coords.square]
+        )
 
-        if not choices: # backtrack
+        if not choices:  # backtrack
             return False
 
         while choices:
@@ -77,11 +80,11 @@ class MakeSudoku(Sudoku):
         self.is_valid_board()
         b = deepcopy(self.board)
         nums = set()
-        nums_to_remove = self.n + 1 # easy mode
+        nums_to_remove = self.n + 1  # easy mode
 
         while len(nums) < nums_to_remove:
-            num = randint(1, self.n**2)
-            nums.add(num-1) if num not in nums else 0
+            num = randint(1, self.n ** 2)
+            nums.add(num - 1) if num not in nums else 0
 
         for num in nums:
             r, c = self.num_to_coords(num)

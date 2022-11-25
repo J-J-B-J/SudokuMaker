@@ -1,4 +1,4 @@
-# solve_sudoku.py
+"""Solve a sudoku board"""
 
 import heapq
 from copy import deepcopy
@@ -9,6 +9,7 @@ from helper import Constraints, Coords, PriorityInfo
 
 
 class SolveSudoku(Sudoku):
+    """A solved sudoku"""
 
     def __init__(self, sqrt_n, board):
         Sudoku.__init__(self, sqrt_n)
@@ -20,7 +21,7 @@ class SolveSudoku(Sudoku):
         Traverse board for row, col, square constraints
         """
 
-        rc = [set(range(1, self.n+1)) for x in range(self.n)]
+        rc = [set(range(1, self.n + 1)) for _ in range(self.n)]
         cc, sc = deepcopy(rc), deepcopy(rc)
 
         for row_index, row in enumerate(self.board):
@@ -37,19 +38,23 @@ class SolveSudoku(Sudoku):
 
     def solve_puzzle(self):
         """
-        Fill in easiest blanks first (eliminate less choices for other unassigned var)
+        Fill in the easiest blanks first
+        (eliminate choices for other unassigned var)
         """
 
         heap = self.sort_blanks_by_priority(self.get_blank_coords())
-        self.recurse(deepcopy(heap), self.constraints)  # modifies self.board in place
+        self.recurse(deepcopy(heap), self.constraints)  # modifies
+        # self.board in place
 
     def recurse(self, heap, constraints):
         """
         Dfs and backtrack for solution.
 
-        for item in heap: for choice in item constraints: copy constraints, remove choice, recurse
+        for item in heap: for choice in item constraints: copy constraints,
+        remove choice, recurse
 
-        self.board does not reflect current recursion state of board (constraints do)
+        self.board does not reflect current recursion state of board
+        (constraints do)
         but will have final solution when constraints are empty
         """
 
@@ -58,8 +63,8 @@ class SolveSudoku(Sudoku):
             item = heapq.heappop(heap)
             coords = item.coords
             choices = list(constraints.row[coords.row]
-            & constraints.col[coords.col]
-            & constraints.square[coords.square])
+                           & constraints.col[coords.col]
+                           & constraints.square[coords.square])
 
             if not choices:
                 return False
@@ -73,7 +78,8 @@ class SolveSudoku(Sudoku):
                 cc.col[coords.col].remove(num)
                 cc.square[coords.square].remove(num)
 
-                result = self.recurse(deepcopy(heap), cc)  # recurse with new constraints
+                result = self.recurse(deepcopy(heap), cc)  # recurse with
+                # new constraints
                 if result:
                     return True
 
@@ -84,31 +90,37 @@ class SolveSudoku(Sudoku):
         Assign cell priority based on lowest fellow blank cell count.
         Return PriorityInfo object for use in heap.
         """
-        row_zero_count = sum(1 for zero in (filter(lambda x: x == 0, self.board[coords.row]) ))
-        col_zero_count = sum(1 for zero in (filter(lambda x: x[ coords.col ] == 0, self.board) ))
+        row_zero_count = sum(
+            1 for _ in (filter(lambda x: x == 0, self.board[coords.row])))
+        col_zero_count = sum(
+            1 for _ in (filter(lambda x: x[coords.col] == 0, self.board)))
         square_zero_count = 0
         s = self.square_num_to_coords(coords.square)
-        for r in range(s[0], s[0] + self.sqrt_n-1):
-            for c in range(s[1], s[1] + self.sqrt_n-1):
+        for r in range(s[0], s[0] + self.sqrt_n - 1):
+            for c in range(s[1], s[1] + self.sqrt_n - 1):
                 try:
                     if self.board[r][c] == 0:
                         square_zero_count += 1
                 except IndexError:
                     print("OMG INDEXERROR")
-                    import pdb; pdb.set_trace()
+                    import pdb
+                    pdb.set_trace()
 
-        return PriorityInfo(coords, row_zero_count, col_zero_count, square_zero_count)
+        return PriorityInfo(coords, row_zero_count, col_zero_count,
+                            square_zero_count)
 
     def get_blank_coords(self):
         """
-        Return list of blank cell coordinates in self.board
+        Return list of blank cell coordinates in 'self.board'
         """
 
         coords = [Coords(row=r, col=c, square=self.get_square_index(r, c))
-        for c in range(self.n) for r in range(self.n) if self.board[r][c] == 0 ]
+                  for c in range(self.n) for r in range(self.n) if
+                  self.board[r][c] == 0]
         return coords
 
     def sort_blanks_by_priority(self, coords):
+        """Sort the blank fields by their priority"""
         heap = []
         for c in list(coords):
             item = self.get_blank_priority(c)

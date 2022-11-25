@@ -1,16 +1,20 @@
-# run.py
+"""Make a sudoku board"""
 
 from make import MakeSudoku
 from solve import SolveSudoku
 from math import sqrt
 from enum import Enum
 
+
 class Error(Enum):
+    """An error class"""
     not_integer = 0
     not_perfect_square = 1
     not_greater_than_3 = 2
 
+
 def print_help(e):
+    """Print an error"""
     if e == Error.not_integer:
         print("Input must be an integer.")
     elif e == Error.not_perfect_square:
@@ -19,7 +23,9 @@ def print_help(e):
         print("Input must be 4 or greater.")
     return False
 
+
 def valid_input(num):
+    """Check if the input is valid"""
     try:
         int_num = int(num)
         if int_num < 4:
@@ -27,11 +33,12 @@ def valid_input(num):
         if sqrt(int_num) % int(sqrt(int_num)) != 0:
             return print_help(Error.not_perfect_square)
         return True
-
-    except:
+    except ValueError:
         return print_help(Error.not_integer)
 
+
 def main():
+    """The main function"""
     print("\nEnter sudoku size (\"9\" for 9x9 sudoku): ")
     num = input()
     while not valid_input(num):
@@ -48,6 +55,7 @@ def main():
     print("Solved:\n")
     s.print_board()
     s.is_valid_board()
+
 
 if __name__ == "__main__":
     main()
