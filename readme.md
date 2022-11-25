@@ -1,9 +1,9 @@
 
 #### sudoku maker and solver in python
 
-uses forward checking to enforce consistency of arcs pointing to new assignment and backtracks when domain is empty.
+Uses forward checking to enforce consistency of arcs pointing to new assignment and backtracks when domain is empty.
 
-####files
+#### Files
 
     helper.py: classes for nice shorthand
     base.py: base sudoku class with helper functions
@@ -11,7 +11,7 @@ uses forward checking to enforce consistency of arcs pointing to new assignment 
     solve.py: solve a sudoku board
     run.py: parse user input and make/solve board of chosen size
 
-####terms
+#### Terms
 
     square: sqrt_n by sqrt_n section of nxn board
 
@@ -19,11 +19,11 @@ uses forward checking to enforce consistency of arcs pointing to new assignment 
 
     0 represents a blank cell
 
-####run
+#### Run
 
     python3 run.py
 
-example output:
+Example output:
 
     Enter sudoku size ("9" for 9x9 sudoku):
     9
